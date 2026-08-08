@@ -401,8 +401,47 @@ function initAiBrowser(windowElement: HTMLDivElement): void {
     const goButton = windowElement.querySelector('.browser-go-button') as HTMLButtonElement;
     const iframe = windowElement.querySelector('#browser-frame') as HTMLIFrameElement;
     const loadingEl = windowElement.querySelector('.browser-loading') as HTMLDivElement;
-    const DIAL_UP_SOUND_URL = 'https://www.soundjay.com/communication/dial-up-modem-01.mp3';
-    let dialUpAudio: HTMLAudioElement | null = null;
+    let audioCtx: AudioContext | null = null;
+    let modemOscs: OscillatorNode[] = [];
+
+    function playDialUpSound(): void {
+        try {
+            const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+            if (!AudioCtx) return;
+            if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume().catch(() => {});
+            }
+
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc1.type = 'sawtooth';
+            osc2.type = 'square';
+            osc1.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc2.frequency.setValueAtTime(2100, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc1.start();
+            osc2.start();
+            modemOscs = [osc1, osc2];
+        } catch {
+            // Silently handle web audio policies
+        }
+    }
+
+    function stopDialUpSound(): void {
+        try {
+            modemOscs.forEach(osc => { try { osc.stop(); osc.disconnect(); } catch {} });
+            modemOscs = [];
+        } catch {}
+    }
 
     if (!addressBar || !goButton || !iframe || !loadingEl) return;
 
@@ -427,23 +466,17 @@ function initAiBrowser(windowElement: HTMLDivElement): void {
                     @keyframes dialup-blink {
                         0%, 80%, 100% { opacity: 0; }
                         40% { opacity: 1; }
-                    }
+                        }
                     .browser-loading p { margin: 5px 0; }
                     .browser-loading .small-text { font-size: 0.8em; color: #aaa; }
                 </style>
                 <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/000/948/341/datas/original.gif"/>
                 <p>Connecting to ${domain}<span class="dialup-animation"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span></p>
-                <!-- Sound will play via JS -->
             `;
             loadingEl.style.display = 'flex';
             // --- END RESTORED DIALUP ANIMATION ---
 
-            try {
-                if (!dialUpAudio) {
-                    dialUpAudio = new Audio(DIAL_UP_SOUND_URL); dialUpAudio.loop = true;
-                }
-                await dialUpAudio.play();
-            } catch (audioError) { console.error("Dial-up sound error:", audioError); }
+            playDialUpSound();
 
             try {
                 if (!geminiInstance) {
@@ -505,7 +538,7 @@ function initAiBrowser(windowElement: HTMLDivElement): void {
                 `);
             } finally {
                 loadingEl.style.display = 'none';
-                if (dialUpAudio) { dialUpAudio.pause(); dialUpAudio.currentTime = 0; }
+                stopDialUpSound();
             }
         } catch (e) { alert("Invalid URL"); loadingEl.style.display = 'none'; }
     }
