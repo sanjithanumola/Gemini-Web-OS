@@ -1,0 +1,8 @@
+{
+  "name": "Gemini Web OS",
+  "description": "A modern web operating system desktop with integrated AI applications and sleek modern UI design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

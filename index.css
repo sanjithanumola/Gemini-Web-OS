@@ -1,0 +1,1161 @@
+/* ==========================================
+   Gemini Web OS - Modern Desktop Stylesheet
+   ========================================== */
+
+/* Root Variables & Themes */
+:root {
+  --os-font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --accent-color: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.4);
+  --glass-bg: rgba(15, 23, 42, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  --window-bg: rgba(30, 41, 59, 0.85);
+  --window-header: rgba(15, 23, 42, 0.75);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --card-bg: rgba(255, 255, 255, 0.07);
+}
+
+/* Base Body Setup */
+body {
+  font-family: var(--os-font);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  background-color: #0f172a;
+  color: var(--text-main);
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ==========================================
+   Desktop Wallpaper Themes
+   ========================================== */
+.desktop {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  padding-top: 40px; /* Space for Top Bar */
+  padding-bottom: 70px; /* Space for Bottom Dock */
+  box-sizing: border-box;
+  transition: background 0.5s ease;
+}
+
+/* Theme 1: Aurora Indigo (Default) */
+.desktop[data-theme="aurora"], .desktop:not([data-theme]) {
+  background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.45), transparent 45%),
+              radial-gradient(circle at 80% 30%, rgba(168, 85, 247, 0.4), transparent 50%),
+              radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.35), transparent 50%),
+              linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  --accent-color: #6366f1;
+}
+
+/* Theme 2: Sunset Violet */
+.desktop[data-theme="sunset"] {
+  background: radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.5), transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.4), transparent 45%),
+              radial-gradient(circle at 60% 80%, rgba(139, 92, 246, 0.45), transparent 50%),
+              linear-gradient(135deg, #18181b 0%, #31102f 50%, #09090b 100%);
+  --accent-color: #ec4899;
+}
+
+/* Theme 3: Emerald Glass */
+.desktop[data-theme="emerald"] {
+  background: radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.45), transparent 45%),
+              radial-gradient(circle at 70% 60%, rgba(6, 182, 212, 0.4), transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(52, 211, 153, 0.25), transparent 40%),
+              linear-gradient(135deg, #022c22 0%, #064e3b 50%, #022c22 100%);
+  --accent-color: #10b981;
+}
+
+/* Theme 4: Cyber Dark */
+.desktop[data-theme="cyber"] {
+  background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.35), transparent 40%),
+              radial-gradient(circle at 80% 80%, rgba(217, 70, 239, 0.35), transparent 40%),
+              linear-gradient(135deg, #030712 0%, #0b0f19 100%);
+  --accent-color: #38bdf8;
+}
+
+/* Theme 5: Modern Light */
+.desktop[data-theme="light"] {
+  background: radial-gradient(circle at 20% 20%, rgba(186, 230, 253, 0.8), transparent 50%),
+              radial-gradient(circle at 80% 30%, rgba(221, 214, 254, 0.8), transparent 50%),
+              linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --window-bg: rgba(255, 255, 255, 0.9);
+  --window-header: rgba(241, 245, 249, 0.95);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --accent-color: #4f46e5;
+}
+
+/* Ambient Floating Particles Background Effect */
+.desktop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ==========================================
+   Top Status Navigation Bar
+   ========================================== */
+#top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 34px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  z-index: 9999;
+  font-size: 0.8rem;
+  box-sizing: border-box;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.os-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.os-brand-logo {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.top-bar-menu {
+  display: flex;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.top-bar-menu span {
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.top-bar-menu span:hover {
+  color: var(--text-main);
+  background: var(--card-bg);
+}
+
+.top-bar-center {
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-bar-icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-size: 0.8rem;
+  transition: background 0.2s;
+}
+
+.top-bar-icon-btn:hover {
+  background: var(--card-bg);
+}
+
+/* ==========================================
+   Desktop App Icons
+   ========================================== */
+.desktop-grid {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(90px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: 100px;
+  gap: 12px;
+  padding: 16px;
+  height: calc(100vh - 120px);
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  padding: 8px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.icon:hover {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.icon img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.icon span {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ==========================================
+   Modern Window Styling
+   ========================================== */
+.window {
+  position: absolute;
+  top: 60px;
+  left: 100px;
+  width: 520px;
+  height: 420px;
+  display: none;
+  flex-direction: column;
+  background: var(--window-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+  z-index: 10;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.window.active {
+  display: flex;
+  z-index: 30;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent-color);
+}
+
+.window.resizable {
+  resize: both;
+  min-width: 280px;
+  min-height: 200px;
+}
+
+/* Window Titlebar */
+.window-titlebar {
+  height: 38px;
+  background: var(--window-header);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.window-titlebar:active {
+  cursor: grabbing;
+}
+
+.window-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Traffic Light Control Buttons */
+.window-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.window-control-button {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+  color: transparent;
+  transition: all 0.2s;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.window-close {
+  background-color: #ef4444;
+  border: 1px solid #dc2626;
+}
+
+.window-close:hover {
+  color: #7f1d1d;
+}
+
+.window-minimize {
+  background-color: #eab308;
+  border: 1px solid #ca8a04;
+}
+
+.window-minimize:hover {
+  color: #713f12;
+}
+
+.window-maximize {
+  background-color: #22c55e;
+  border: 1px solid #16a34a;
+}
+
+.window-maximize:hover {
+  color: #14532d;
+}
+
+.window-controls:hover .window-control-button {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Window Inner Content Container */
+.window-content {
+  flex-grow: 1;
+  background: transparent;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-main);
+}
+
+/* Standard Scrollbar inside Windows */
+.window-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.window-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* ==========================================
+   Floating Bottom Dock / Taskbar
+   ========================================== */
+#taskbar {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 56px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 9990;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+/* Start Button in Dock */
+#start-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-color), #a855f7);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+#start-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px var(--accent-glow);
+}
+
+#start-button img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Divider in Dock */
+.dock-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--glass-border);
+  margin: 0 4px;
+}
+
+#taskbar-apps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.taskbar-app {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.taskbar-app:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.taskbar-app.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--glass-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.taskbar-app.active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 3px;
+  background-color: var(--accent-color);
+  border-radius: 999px;
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+.taskbar-app img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* ==========================================
+   Modern Launcher / Start Menu
+   ========================================== */
+.start-menu {
+  position: fixed;
+  bottom: 78px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  width: 480px;
+  max-width: 90vw;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 9995;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.start-menu.active {
+  display: flex;
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.start-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 10px 14px;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.start-search-box input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.start-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.start-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.78rem;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.start-menu-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--glass-border);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   Control Center Overlay
+   ========================================== */
+.control-center-panel {
+  position: fixed;
+  top: 42px;
+  right: 14px;
+  width: 320px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 9999;
+}
+
+.control-center-panel.active {
+  display: flex;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.theme-chip {
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.theme-chip:hover {
+  transform: scale(1.1);
+}
+
+.theme-chip.active {
+  border-color: white;
+}
+
+/* ==========================================
+   App Specific Modern Styling
+   ========================================== */
+
+/* --- Gemini Chat App --- */
+.gemini-chat-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.gemini-chat-history {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 6px;
+  margin-bottom: 12px;
+}
+
+.gemini-chat-history p {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  max-width: 85%;
+  word-wrap: break-word;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.gemini-chat-history .user-message {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--accent-color), #818cf8);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.gemini-chat-history .gemini-message {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  border-bottom-left-radius: 4px;
+}
+
+.gemini-chat-history .system-message {
+  align-self: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.gemini-chat-input-area {
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 6px;
+}
+
+.gemini-chat-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  padding: 6px 10px;
+  font-size: 0.88rem;
+}
+
+.gemini-chat-send {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.gemini-chat-send:hover {
+  opacity: 0.9;
+}
+
+/* --- GemNotes (Notepad) App --- */
+.notepad-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.notepad-story-button {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.notepad-story-button:hover {
+  transform: scale(1.03);
+}
+
+.notepad-textarea {
+  flex-grow: 1;
+  width: 100%;
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 14px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+/* --- Chrome Browser App --- */
+.browser-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.address-bar-container {
+  display: flex;
+  flex-grow: 1;
+  gap: 6px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 4px 10px;
+}
+
+.browser-address-bar {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  font-size: 0.85rem;
+}
+
+.browser-go-button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.browser-viewport {
+  position: relative;
+  flex-grow: 1;
+  background: #ffffff;
+}
+
+.browser-loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.9);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  display: none;
+}
+
+/* --- Paint App --- */
+.paint-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.paint-colors {
+  display: flex;
+  gap: 6px;
+}
+
+.paint-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.paint-color-swatch.active {
+  border-color: white;
+  transform: scale(1.15);
+}
+
+.paint-brush-sizes {
+  display: flex;
+  gap: 6px;
+}
+
+.paint-size-button, .paint-clear-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.paint-size-button.active {
+  background: var(--accent-color);
+  border-color: transparent;
+}
+
+#paint-canvas {
+  flex-grow: 1;
+  background: white;
+  cursor: crosshair;
+}
+
+/* Floating AI Paint Critic Assistant */
+#paint-assistant {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 140px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9980;
+  transition: opacity 0.3s ease;
+}
+
+#paint-assistant.visible {
+  display: flex;
+}
+
+.assistant-bubble {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 8px;
+  max-width: 220px;
+}
+
+.assistant-image {
+  width: 60px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+
+/* --- Minesweeper App --- */
+.minesweeper-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.6);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.minesweeper-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+}
+
+.minesweeper-info {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.minesweeper-reset-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minesweeper-hint-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.minesweeper-hint-button {
+  background: linear-gradient(135deg, #eab308, #f97316);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.minesweeper-commentary {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  flex-grow: 1;
+}
+
+.minesweeper-grid-container {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+}
+
+.minesweeper-grid {
+  display: grid;
+  gap: 3px;
+}
+
+.minesweeper-cell {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.minesweeper-cell:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.minesweeper-cell.revealed {
+  background: rgba(0, 0, 0, 0.3);
+  cursor: default;
+}
+
+.minesweeper-cell.exploded {
+  background: #ef4444;
+}
+
+/* --- Media Player App --- */
+.media-player-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.media-player-url-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.media-player-input {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.media-player-load-button {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.media-player-video-container {
+  flex-grow: 1;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-player-controls-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid var(--glass-border);
+}
+
+.media-player-buttons-group {
+  display: flex;
+  gap: 8px;
+}
+
+.media-player-control-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.media-player-control-button:hover:not(:disabled) {
+  background: var(--accent-color);
+}
+
+.media-player-control-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* File Explorer / My Gemtop */
+.window-icon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.window-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.window-icon img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 6px;
+}
+
+.window-icon span {
+  font-size: 0.8rem;
+  color: var(--text-main);
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

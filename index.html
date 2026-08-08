@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemini Web OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@0.7.0",
+          "@tailwindcss/browser": "https://esm.sh/@tailwindcss/browser@^4.1.3"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body>
+    <!-- Top Status Navigation Bar -->
+    <header id="top-bar">
+      <div class="top-bar-left">
+        <div class="os-brand" id="os-brand-trigger">
+          <div class="os-brand-logo">G</div>
+          <span>Gemini Web OS</span>
+        </div>
+        <nav class="top-bar-menu">
+          <span id="top-menu-apps">Apps</span>
+          <span id="top-menu-widgets">Widgets</span>
+          <span id="top-menu-theme">Themes</span>
+        </nav>
+      </div>
+
+      <div class="top-bar-center" id="top-bar-clock">
+        Sat Aug 8, 12:00 PM
+      </div>
+
+      <div class="top-bar-right">
+        <button class="top-bar-icon-btn" id="control-center-btn" title="Control Center & Themes">
+          🎨 Themes & Control
+        </button>
+        <div class="top-bar-icon-btn" title="Wi-Fi Signal">📶</div>
+        <div class="top-bar-icon-btn" title="Battery Level">⚡ 98%</div>
+      </div>
+    </header>
+
+    <!-- Control Center & Theme Switcher Panel -->
+    <div class="control-center-panel" id="control-center">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;">
+        <span style="font-weight: 700; font-size: 0.95rem;">Desktop Customizer</span>
+        <span id="close-control-center" style="cursor: pointer; opacity: 0.7;">✕</span>
+      </div>
+
+      <div>
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Wallpaper & Color Palette</div>
+        <div class="theme-options">
+          <div class="theme-chip active" data-theme-id="aurora" style="background: linear-gradient(135deg, #6366f1, #a855f7);" title="Aurora Indigo"></div>
+          <div class="theme-chip" data-theme-id="sunset" style="background: linear-gradient(135deg, #ec4899, #f59e0b);" title="Sunset Violet"></div>
+          <div class="theme-chip" data-theme-id="emerald" style="background: linear-gradient(135deg, #10b981, #06b6d4);" title="Emerald Glass"></div>
+          <div class="theme-chip" data-theme-id="cyber" style="background: linear-gradient(135deg, #030712, #38bdf8);" title="Cyber Dark"></div>
+          <div class="theme-chip" data-theme-id="light" style="background: linear-gradient(135deg, #e2e8f0, #38bdf8);" title="Modern Light"></div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 12px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; justify-content: space-between;">
+          <span>AI Engine</span>
+          <span style="color: #22c55e; font-weight: 600;">Gemini 3.6 Flash</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Display Mode</span>
+          <span>Glassmorphic OS</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Status</span>
+          <span style="color: #38bdf8;">100% Operational</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Desktop Workspace -->
+    <div class="desktop" id="desktop" data-theme="aurora">
+      <!-- Desktop Icons Grid -->
+      <div class="desktop-grid">
+        <div class="icon" data-app="myComputer" id="icon-mycomputer">
+          <img
+            src="https://storage.googleapis.com/gemini-95-icons/mycomputer.png"
+            alt="My Gemtop"
+          />
+          <span>My Gemtop</span>
+        </div>
+        <div class="icon" data-app="chrome" id="icon-chrome">
+          <img src="https://storage.googleapis.com/gemini-95-icons/chrome-icon-2.png" alt="Chrome" />
+          <span>Chrome</span>
+        </div>
+        <div class="icon" data-app="notepad" id="icon-notepad">
+          <img src="https://storage.googleapis.com/gemini-95-icons/GemNotes.png" alt="Notepad" />
+          <span>GemNotes</span>
+        </div>
+        <div class="icon" data-app="paint" id="icon-paint">
+          <img src="https://storage.googleapis.com/gemini-95-icons/gempaint.png" alt="Paint" />
+          <span>GemPaint</span>
+        </div>
+        <div class="icon" data-app="doom" id="icon-doom">
+          <img
+            src="https://64.media.tumblr.com/1d89dfa76381e5c14210a2149c83790d/7a15f84c681c1cf9-c1/s540x810/86985984be99d5591e0cbc0dea6f05ffa3136dac.png"
+            alt="Doom II"
+          />
+          <span>Doom II</span>
+        </div>
+        <div class="icon" data-app="gemini" id="icon-gemini">
+          <img
+            src="https://storage.googleapis.com/gemini-95-icons/GeminiChatRetro.png"
+            alt="Gemini App"
+          />
+          <span>Gemini Assistant</span>
+        </div>
+        <div class="icon" data-app="minesweeper" id="icon-minesweeper">
+          <img
+            src="https://storage.googleapis.com/gemini-95-icons/gemsweeper.png"
+            alt="Minesweeper"
+          />
+          <span>GemSweeper</span>
+        </div>
+        <div class="icon" data-app="mediaPlayer" id="icon-mediaPlayer">
+          <img
+            src="https://storage.googleapis.com/gemini-95-icons/ytmediaplayer.png"
+            alt="Media Player"
+          />
+          <span>GemPlayer</span>
+        </div>
+      </div>
+
+      <!-- Application Windows -->
+
+      <!-- 1. My Computer / File Explorer -->
+      <div class="window resizable" id="myComputer">
+        <div class="window-titlebar">
+          <span class="window-title">📂 My Gemtop Drive</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content" style="padding: 16px;">
+          <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 12px; color: var(--text-muted);">Storage Drives & Files</div>
+          <div id="c-drive-icon" class="window-icon">
+            <img src="https://storage.googleapis.com/gemini-95-icons/cdrive.png" alt="C Drive" />
+            <span>Local Disk (C:)</span>
+          </div>
+          <div id="c-drive-content" style="display: none; padding-top: 10px;">
+            <div id="secret-image-icon" class="window-icon">
+              <img
+                src="https://win98icons.alexmeub.com/icons/png/paint_file-0.png"
+                alt="Secret File"
+              />
+              <span>dontshowthis<br />toanyone.jpg</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. AI Web Browser (Chrome) -->
+      <div class="window resizable" id="chrome" style="width: 640px; height: 480px;">
+        <div class="window-titlebar">
+          <span class="window-title">🌐 Chrome - AI Browser</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content">
+          <div class="browser-toolbar">
+            <div class="address-bar-container">
+              <span style="opacity: 0.6; font-size: 0.8rem;">🔒</span>
+              <input
+                type="text"
+                class="browser-address-bar"
+                placeholder="Enter a website URL or domain..."
+                value="https://www.google.com"
+              />
+              <button class="browser-go-button">Go</button>
+            </div>
+          </div>
+          <div class="browser-viewport">
+            <iframe
+              id="browser-frame"
+              src="https://web.archive.org/web/19990428171538/http://google.com/"
+              width="100%"
+              height="100%"
+            ></iframe>
+            <div class="browser-loading">
+              <div style="margin-bottom: 12px; font-size: 1.1rem; font-weight: 600;">Generating Web Page with Gemini...</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">Crafting layout & custom styling...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. GemNotes (Notepad) -->
+      <div class="window resizable" id="notepad" style="width: 500px; height: 400px;">
+        <div class="window-titlebar">
+          <span class="window-title">📝 GemNotes - Smart Editor</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content">
+          <div class="notepad-menu">
+            <span style="font-size: 0.8rem; font-weight: 600; opacity: 0.8;">Text Editor</span>
+            <button class="notepad-story-button">✨ Generate Creative Story</button>
+          </div>
+          <textarea
+            class="notepad-textarea"
+            placeholder="Start typing your note or generate a story with Gemini AI..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- 4. GemPaint -->
+      <div class="window resizable" id="paint" style="width: 560px; height: 440px;">
+        <div class="window-titlebar">
+          <span class="window-title">🎨 GemPaint - Canvas Studio</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content">
+          <div class="paint-toolbar">
+            <div class="paint-colors">
+              <button
+                class="paint-color-swatch"
+                data-color="black"
+                style="background-color: black"
+                title="Black"
+              ></button>
+              <button
+                class="paint-color-swatch"
+                data-color="red"
+                style="background-color: #ef4444"
+                title="Red"
+              ></button>
+              <button
+                class="paint-color-swatch"
+                data-color="blue"
+                style="background-color: #3b82f6"
+                title="Blue"
+              ></button>
+              <button
+                class="paint-color-swatch"
+                data-color="green"
+                style="background-color: #22c55e"
+                title="Green"
+              ></button>
+              <button
+                class="paint-color-swatch"
+                data-color="yellow"
+                style="background-color: #eab308"
+                title="Yellow"
+              ></button>
+              <button
+                class="paint-color-swatch"
+                data-color="white"
+                style="background-color: white; border: 1px solid #ccc;"
+                title="Eraser"
+              >
+                E
+              </button>
+            </div>
+            <div class="paint-brush-sizes">
+              <button class="paint-size-button" data-size="2">Small</button>
+              <button class="paint-size-button" data-size="5">Med</button>
+              <button class="paint-size-button" data-size="10">Large</button>
+            </div>
+            <button class="paint-clear-button">Clear Canvas</button>
+          </div>
+          <canvas id="paint-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- 5. Doom II -->
+      <div class="window resizable" id="doom" style="width: 580px; height: 420px;">
+        <div class="window-titlebar">
+          <span class="window-title">🎮 Doom II Classic</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content" id="doom-content"></div>
+      </div>
+
+      <!-- 6. Gemini Assistant Chat -->
+      <div class="window resizable" id="gemini" style="width: 480px; height: 500px;">
+        <div class="window-titlebar">
+          <span class="window-title">✨ Gemini AI Assistant</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content gemini-chat-content">
+          <div class="gemini-chat-history"></div>
+          <div class="gemini-chat-input-area">
+            <input type="text" class="gemini-chat-input" placeholder="Ask Gemini anything..." />
+            <button class="gemini-chat-send">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. GemSweeper (Minesweeper) -->
+      <div class="window resizable" id="minesweeper" style="width: 420px; height: 480px;">
+        <div class="window-titlebar">
+          <span class="window-title">💣 GemSweeper</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content minesweeper-content">
+          <div class="minesweeper-controls">
+            <div class="minesweeper-info minesweeper-flag-count">🚩 10</div>
+            <button class="minesweeper-reset-button">🙂</button>
+            <div class="minesweeper-info minesweeper-timer">⏱️ 0</div>
+          </div>
+          <div class="minesweeper-hint-area">
+            <button class="minesweeper-hint-button">💡 AI Hint</button>
+            <div class="minesweeper-commentary">Click any tile to start playing!</div>
+          </div>
+          <div class="minesweeper-grid-container">
+            <div class="minesweeper-grid" id="minesweeper-board"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Image Viewer -->
+      <div class="window resizable" id="imageViewer" style="width: 380px; height: 320px;">
+        <div class="window-titlebar">
+          <span class="window-title" id="image-viewer-title">🖼️ Image Viewer</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div
+          class="window-content image-viewer-content"
+          style="display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.5);"
+        >
+          <img
+            id="image-viewer-img"
+            src=""
+            alt="Image"
+            style="max-width: 100%; max-height: 100%; object-fit: contain"
+          />
+        </div>
+      </div>
+
+      <!-- 9. GemPlayer (YouTube Media Player) -->
+      <div class="window resizable" id="mediaPlayer" style="width: 540px; height: 480px;">
+        <div class="window-titlebar">
+          <span class="window-title">▶️ GemPlayer - YouTube Player</span>
+          <div class="window-controls">
+            <div class="window-close window-control-button" title="Close">✕</div>
+            <div class="window-minimize window-control-button" title="Minimize">−</div>
+          </div>
+        </div>
+        <div class="window-content media-player-content">
+          <div class="media-player-url-bar">
+            <input type="text" class="media-player-input" placeholder="Enter YouTube Video URL or ID" />
+            <button class="media-player-load-button">Load Video</button>
+          </div>
+          <div class="media-player-video-container">
+            <div id="youtube-player-mediaPlayer">
+              <p class="media-player-status-message">Loading GemPlayer...</p>
+            </div>
+          </div>
+          <div class="media-player-controls-panel">
+            <div class="media-player-buttons-group">
+              <button class="media-player-control-button" id="media-player-play" title="Play">▶</button>
+              <button class="media-player-control-button" id="media-player-pause" title="Pause">❚❚</button>
+              <button class="media-player-control-button" id="media-player-stop" title="Stop">■</button>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Gemini OS Media</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Launcher Start Menu -->
+      <div class="start-menu" id="start-menu">
+        <div class="start-search-box">
+          <span>🔍</span>
+          <input type="text" id="launcher-search" placeholder="Search apps, notes, or AI actions..." />
+        </div>
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Applications</div>
+        <div class="start-apps-grid">
+          <div class="start-menu-item" data-app="myComputer">
+            <span style="font-size: 1.5rem;">📂</span>
+            <span>My Gemtop</span>
+          </div>
+          <div class="start-menu-item" data-app="chrome">
+            <span style="font-size: 1.5rem;">🌐</span>
+            <span>Chrome</span>
+          </div>
+          <div class="start-menu-item" data-app="notepad">
+            <span style="font-size: 1.5rem;">📝</span>
+            <span>GemNotes</span>
+          </div>
+          <div class="start-menu-item" data-app="paint">
+            <span style="font-size: 1.5rem;">🎨</span>
+            <span>GemPaint</span>
+          </div>
+          <div class="start-menu-item" data-app="doom">
+            <span style="font-size: 1.5rem;">🎮</span>
+            <span>Doom II</span>
+          </div>
+          <div class="start-menu-item" data-app="gemini">
+            <span style="font-size: 1.5rem;">✨</span>
+            <span>Gemini AI</span>
+          </div>
+          <div class="start-menu-item" data-app="minesweeper">
+            <span style="font-size: 1.5rem;">💣</span>
+            <span>GemSweeper</span>
+          </div>
+          <div class="start-menu-item" data-app="mediaPlayer">
+            <span style="font-size: 1.5rem;">▶️</span>
+            <span>GemPlayer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Bottom Dock / Taskbar -->
+      <div id="taskbar">
+        <button id="start-button" title="Launch Applications">
+          <div style="color: white; font-weight: 900; font-size: 1.2rem;">✨</div>
+        </button>
+        <div class="dock-divider"></div>
+        <div id="taskbar-apps"></div>
+      </div>
+
+      <!-- Floating AI Paint Assistant -->
+      <div id="paint-assistant">
+        <div class="assistant-bubble">Analyzing art...</div>
+        <img
+          src="https://storage.googleapis.com/gemini-95-icons/robot-assistant.gif"
+          alt="Paint Assistant"
+          class="assistant-image"
+        />
+      </div>
+    </div>
+
+    <script type="module" src="/index.ts"></script>
+  </body>
+</html>
